@@ -23,7 +23,6 @@ function guessLetter(letter) {
 
 function checkGameOver() {
   if (remainingGuesses <= 0) {
-    jresult.innerhtml="Sorry, You Lost"
     return true;
   }
   for (const letter of word) {
@@ -31,6 +30,24 @@ function checkGameOver() {
       return false;
     }
   }
-  jresult.innerhtml="WOHOOO, You Won!!!"
   return true;
+}
+
+function displayGameState() {
+  let wordString = "";
+  for (const letter of word) {
+    if (guessedLetters[letter]) {
+      wordString += letter;
+    } else {
+      wordString += "_";
+    }
+    wordString += " ";
+  }
+  jword.textContent = wordString;
+  jremainingGuesses.textContent = `Remaining guesses: ${remainingGuesses}`;
+  jguessedLetters.textContent = `Guessed letters: ${Object.keys(guessedLetters).filter(letter => guessedLetters[letter]).join(", ")}`;
+  if (gameOver) {
+    jguessInput.disabled = true;
+    jguessButton.disabled = true;
+  }
 }
