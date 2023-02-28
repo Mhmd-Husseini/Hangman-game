@@ -15,10 +15,11 @@ const jguessButton = document.getElementById("guess-button");
 const jresult = document.getElementById("result");
 
 function guessLetter(letter) {
-  if (!word.includes(letter)) {
-    remainingGuesses--;
-  } else
-	guessedLetters[letter] = true;
+  guessedLetters[letter] = true;
+  if ((!word.includes(letter)) && (remainingGuesses >0 )) {
+  remainingGuesses--;
+   } 
+  if (remainingGuesses===0){jresult.textContent ="Sorry!! You Lost";}
 }
 
 function checkGameOver() {
@@ -51,3 +52,24 @@ function displayGameState() {
     jguessButton.disabled = true;
   }
 }
+displayGameState();
+jguessButton.addEventListener("click", () => {
+  const letter = jguessInput.value.trim().toLowerCase();
+
+  if (!letter || gameOver) {
+    return;
+  }
+
+  if (guessedLetters[letter]) {
+    jguessInput.value = "";
+    return;
+  }
+  guessLetter(letter);
+  displayGameState();
+
+if (checkGameOver()) {
+jgameOver = true;
+}
+
+jguessInput.value = "";
+});
